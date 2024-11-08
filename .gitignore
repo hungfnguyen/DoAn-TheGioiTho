@@ -1,0 +1,24 @@
+# Bỏ qua file nhị phân
+.vs/
+TheGioiTho/bin/
+TheGioiTho/obj/
+*.exe
+*.pdb
+*.suo
+
+# Visual Studio
+*.user
+*.cache
+*.log
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# Installer
+*.dll
+
+# NuGet
+*.nupkg
+packages/
+

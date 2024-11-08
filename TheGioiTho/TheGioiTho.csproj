@@ -1,0 +1,373 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AC368497-8B4D-4E4A-A380-3EC1BF9DE547}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>TheGioiTho</RootNamespace>
+    <AssemblyName>TheGioiTho</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Guna.UI2, Version=2.0.4.6, Culture=neutral, PublicKeyToken=8b9d14aa5142e261, processorArchitecture=MSIL">
+      <HintPath>..\packages\Guna.UI2.WinForms.2.0.4.6\lib\net472\Guna.UI2.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Chart.Controls.4.7.2046\lib\net35\System.Web.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web.DataVisualization.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Chart.Controls.4.7.2046\lib\net35\System.Web.DataVisualization.Design.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Chart.Controls.4.7.2046\lib\net35\System.Windows.Forms.DataVisualization.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms.DataVisualization.Design, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Chart.Controls.4.7.2046\lib\net35\System.Windows.Forms.DataVisualization.Design.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Config\DBConnection.cs" />
+    <Compile Include="Controller\FrmDangNhap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\FrmDangNhap.Designer.cs">
+      <DependentUpon>FrmDangNhap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Calendar\UC_Day.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Calendar\UC_Day.Designer.cs">
+      <DependentUpon>UC_Day.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Calendar\UC_Gio.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Calendar\UC_Gio.Designer.cs">
+      <DependentUpon>UC_Gio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\FrmTho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\FrmTho.Designer.cs">
+      <DependentUpon>FrmTho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\Form_QuanLyBaiDang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\Form_QuanLyBaiDang.Designer.cs">
+      <DependentUpon>Form_QuanLyBaiDang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_DangBai.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_DangBai.Designer.cs">
+      <DependentUpon>UC_DangBai.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_LichHen.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_LichHen.Designer.cs">
+      <DependentUpon>UC_LichHen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_TaiKhoan.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_TaiKhoan.Designer.cs">
+      <DependentUpon>UC_TaiKhoan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_ThongKe.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_ThongKe.Designer.cs">
+      <DependentUpon>UC_ThongKe.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_TrangChu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_TrangChu.Designer.cs">
+      <DependentUpon>UC_TrangChu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_XemDanhGia.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_XemDanhGia.Designer.cs">
+      <DependentUpon>UC_XemDanhGia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\DanhGia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\DanhGia.Designer.cs">
+      <DependentUpon>DanhGia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\DanhSachBaiDang.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\DanhSachBaiDang.Designer.cs">
+      <DependentUpon>DanhSachBaiDang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\DanhSachThoYeuThich.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\DanhSachThoYeuThich.Designer.cs">
+      <DependentUpon>DanhSachThoYeuThich.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\Form1.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\Form1.Designer.cs">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\LiDoHuy.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\LiDoHuy.Designer.cs">
+      <DependentUpon>LiDoHuy.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\TimKiemTho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\TimKiemTho.Designer.cs">
+      <DependentUpon>TimKiemTho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\TrangNguoiDung.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\TrangNguoiDung.Designer.cs">
+      <DependentUpon>TrangNguoiDung.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\XemDanhGia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\XemDanhGia.Designer.cs">
+      <DependentUpon>XemDanhGia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\XemTopTho.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\Form\XemTopTho.Designer.cs">
+      <DependentUpon>XemTopTho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\UC_BaiDang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\UC_BaiDang.Designer.cs">
+      <DependentUpon>UC_BaiDang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\UserControl\ChiTietLich.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\UserControl\ChiTietLich.Designer.cs">
+      <DependentUpon>ChiTietLich.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\UserControl\UC_DangBaiTimTho.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\UserControl\UC_DangBaiTimTho.Designer.cs">
+      <DependentUpon>UC_DangBaiTimTho.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\UserControl\UC_NoiDungBaiDang.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\UserControl\UC_NoiDungBaiDang.Designer.cs">
+      <DependentUpon>UC_NoiDungBaiDang.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\UserController\UserControl\UC_QuanLyLich.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\UserController\UserControl\UC_QuanLyLich.Designer.cs">
+      <DependentUpon>UC_QuanLyLich.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dao\ThoDao\DanhGiaDao.cs" />
+    <Compile Include="Dao\ThoDao\LichHenDao.cs" />
+    <Compile Include="Dao\ThoDao\TaiKhoanDao.cs" />
+    <Compile Include="Dao\ThoDao\ThongKeDao.cs" />
+    <Compile Include="Dao\ThoDao\BaiDangDao.cs" />
+    <Compile Include="Dao\UserDao\BaiDangNguoiDungDAO.cs" />
+    <Compile Include="Dao\UserDao\DanhGiaNguoiDungDao.cs" />
+    <Compile Include="Dao\UserDao\LichHenNguoiDungDao.cs" />
+    <Compile Include="Dao\UserDao\TaiKhoanNguoiDungDao.cs" />
+    <Compile Include="Dao\UserDao\ThoDAO.cs" />
+    <Compile Include="DoAnTheGioiThoDataSet.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DoAnTheGioiThoDataSet.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BaiDang.cs" />
+    <Compile Include="Model\BaiDangNguoiDung.cs" />
+    <Compile Include="Model\BaiDangTho.cs" />
+    <Compile Include="Model\CongViec.cs" />
+    <Compile Include="Model\DanhGia.cs" />
+    <Compile Include="Model\DanhMuc.cs" />
+    <Compile Include="Model\DatLich.cs" />
+    <Compile Include="Model\LichHen.cs" />
+    <Compile Include="Model\LinhVuc.cs" />
+    <Compile Include="Model\LyDoHuy.cs" />
+    <Compile Include="Model\NgayNghi.cs" />
+    <Compile Include="Model\NgayNghiTho.cs" />
+    <Compile Include="Model\NguoiDung.cs" />
+    <Compile Include="Model\NhanViec.cs" />
+    <Compile Include="Model\Tho.cs" />
+    <Compile Include="Model\UserSession.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Controller\FrmDangNhap.resx">
+      <DependentUpon>FrmDangNhap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Calendar\UC_Day.resx">
+      <DependentUpon>UC_Day.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Calendar\UC_Gio.resx">
+      <DependentUpon>UC_Gio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\FrmTho.resx">
+      <DependentUpon>FrmTho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\Form_QuanLyBaiDang.resx">
+      <DependentUpon>Form_QuanLyBaiDang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\UC_DangBai.resx">
+      <DependentUpon>UC_DangBai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\UC_LichHen.resx">
+      <DependentUpon>UC_LichHen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\UC_TaiKhoan.resx">
+      <DependentUpon>UC_TaiKhoan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\UC_ThongKe.resx">
+      <DependentUpon>UC_ThongKe.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\UC_TrangChu.resx">
+      <DependentUpon>UC_TrangChu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\UC_XemDanhGia.resx">
+      <DependentUpon>UC_XemDanhGia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\DanhGia.resx">
+      <DependentUpon>DanhGia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\DanhSachBaiDang.resx">
+      <DependentUpon>DanhSachBaiDang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\DanhSachThoYeuThich.resx">
+      <DependentUpon>DanhSachThoYeuThich.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\Form1.resx">
+      <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\LiDoHuy.resx">
+      <DependentUpon>LiDoHuy.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\TimKiemTho.resx">
+      <DependentUpon>TimKiemTho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\TrangNguoiDung.resx">
+      <DependentUpon>TrangNguoiDung.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\XemDanhGia.resx">
+      <DependentUpon>XemDanhGia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\Form\XemTopTho.resx">
+      <DependentUpon>XemTopTho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\UC_BaiDang.resx">
+      <DependentUpon>UC_BaiDang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\UserControl\ChiTietLich.resx">
+      <DependentUpon>ChiTietLich.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\UserControl\UC_DangBaiTimTho.resx">
+      <DependentUpon>UC_DangBaiTimTho.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\UserControl\UC_DanhSachBaiDang.resx" />
+    <EmbeddedResource Include="Controller\UserController\UserControl\UC_NoiDungBaiDang.resx">
+      <DependentUpon>UC_NoiDungBaiDang.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\UserController\UserControl\UC_QuanLyLich.resx">
+      <DependentUpon>UC_QuanLyLich.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="DoAnTheGioiThoDataSet.xsc">
+      <DependentUpon>DoAnTheGioiThoDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="DoAnTheGioiThoDataSet.xsd">
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DoAnTheGioiThoDataSet.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="DoAnTheGioiThoDataSet.xss">
+      <DependentUpon>DoAnTheGioiThoDataSet.xsd</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Service\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
