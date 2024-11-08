@@ -91,6 +91,12 @@
     <Compile Include="Controller\ThoController\Calendar\UC_Gio.Designer.cs">
       <DependentUpon>UC_Gio.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controller\ThoController\Tho\FrmChiTietDanhGia.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\FrmChiTietDanhGia.Designer.cs">
+      <DependentUpon>FrmChiTietDanhGia.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controller\ThoController\Tho\FrmTho.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +114,12 @@
     </Compile>
     <Compile Include="Controller\ThoController\Tho\UC_DangBai.Designer.cs">
       <DependentUpon>UC_DangBai.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_DanhGia.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controller\ThoController\Tho\UC_DanhGia.Designer.cs">
+      <DependentUpon>UC_DanhGia.cs</DependentUpon>
     </Compile>
     <Compile Include="Controller\ThoController\Tho\UC_LichHen.cs">
       <SubType>UserControl</SubType>
@@ -265,6 +277,9 @@
     <EmbeddedResource Include="Controller\ThoController\Calendar\UC_Gio.resx">
       <DependentUpon>UC_Gio.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\FrmChiTietDanhGia.resx">
+      <DependentUpon>FrmChiTietDanhGia.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Controller\ThoController\Tho\FrmTho.resx">
       <DependentUpon>FrmTho.cs</DependentUpon>
     </EmbeddedResource>
@@ -273,6 +288,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Controller\ThoController\Tho\UC_DangBai.resx">
       <DependentUpon>UC_DangBai.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controller\ThoController\Tho\UC_DanhGia.resx">
+      <DependentUpon>UC_DanhGia.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controller\ThoController\Tho\UC_LichHen.resx">
       <DependentUpon>UC_LichHen.cs</DependentUpon>

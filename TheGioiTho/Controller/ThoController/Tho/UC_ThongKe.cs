@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using TheGioiTho.Dao;
 using System.Windows.Forms.DataVisualization.Charting;
 using TheGioiTho.DAO;
+using TheGioiTho.Model;
 
 
 namespace TheGioiTho.Controller.Tho
@@ -23,8 +24,10 @@ namespace TheGioiTho.Controller.Tho
             InitializeComponent();
             danhGiaDAO = new ThongKeDao(); // Khởi tạo đối tượng DanhGiaDAO
             this.Load += new EventHandler(UC_XemDanhGia_Load);
-            
-            
+
+            cbThoiGian.SelectedIndex = 0; // Mặc định chọn 3 tháng gần nhất
+            cbThoiGian.SelectedIndexChanged += CbThoiGian_SelectedIndexChanged;
+
         }
         private void CreateChartDuong(Dictionary<string, decimal> data)
         {
@@ -197,16 +200,38 @@ namespace TheGioiTho.Controller.Tho
         }
         private void LoadData(int IDTho)
         {
-            ThongKeDao thongKeDao = new ThongKeDao();
-            Dictionary<string, decimal> doanhThuTheoThang = danhGiaDAO.LayDoanhThuCacThangGanDay(3, IDTho);
+            int months = 1; // Mặc định là 1 tháng
+            if (cbThoiGian.SelectedItem.ToString() == "3 tháng gần nhất")
+            {
+                months = 3;
+            } 
+            else if (cbThoiGian.SelectedItem.ToString() == "6 tháng gần nhất")
+            {
+                months = 6;
+            }
+            else if (cbThoiGian.SelectedItem.ToString() == "1 năm gần nhất")
+            {
+                months = 12;
+            }
 
+            // Lấy dữ liệu doanh thu theo số tháng được chọn
+            Dictionary<string, decimal> doanhThuTheoThang = danhGiaDAO.LayDoanhThuCacThangGanDay(months, IDTho);
             CreateChartDuong(doanhThuTheoThang);
+
+            // Cập nhật bảng doanh thu
+            ThongKeDao thongKeDao = new ThongKeDao();
             DataTable dt = thongKeDao.LayDanhSachCongViecDaHoanThanh(IDTho);
             dgvDoanhThu.DataSource = dt;
         }
+        // Sự kiện khi ComboBox thay đổi
+        private void CbThoiGian_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            int IDTho = UserSession.UserID;
+            LoadData(IDTho);
+        }
         private void UC_XemDanhGia_Load(object sender, EventArgs e)
         {
-            int IDTho = 2;  // Thay ID tho thực tế
+            int IDTho = UserSession.UserID;  // Thay ID tho thực tế
             LoadData(IDTho);
 
             // Tính điểm trung bình và hiển thị lên lblSaotb
@@ -230,6 +255,7 @@ namespace TheGioiTho.Controller.Tho
 
         }
 
+        
     }
 }
 

@@ -40,68 +40,74 @@
             // 
             // btnTrangChu
             // 
+            this.btnTrangChu.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnTrangChu.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnTrangChu.Location = new System.Drawing.Point(12, 21);
             this.btnTrangChu.Name = "btnTrangChu";
             this.btnTrangChu.Size = new System.Drawing.Size(105, 30);
             this.btnTrangChu.TabIndex = 0;
             this.btnTrangChu.Text = "Trang Chủ";
-            this.btnTrangChu.UseVisualStyleBackColor = true;
+            this.btnTrangChu.UseVisualStyleBackColor = false;
             this.btnTrangChu.Click += new System.EventHandler(this.btnTrangChu_Click);
             // 
             // btnDangBai
             // 
+            this.btnDangBai.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.btnDangBai.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnDangBai.Location = new System.Drawing.Point(114, 21);
             this.btnDangBai.Name = "btnDangBai";
             this.btnDangBai.Size = new System.Drawing.Size(105, 30);
             this.btnDangBai.TabIndex = 0;
             this.btnDangBai.Text = "Đăng Bài";
-            this.btnDangBai.UseVisualStyleBackColor = true;
+            this.btnDangBai.UseVisualStyleBackColor = false;
             this.btnDangBai.Click += new System.EventHandler(this.btnDangBai_Click);
             // 
             // btnLichHen
             // 
+            this.btnLichHen.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.btnLichHen.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
             this.btnLichHen.Location = new System.Drawing.Point(215, 21);
             this.btnLichHen.Name = "btnLichHen";
             this.btnLichHen.Size = new System.Drawing.Size(105, 30);
             this.btnLichHen.TabIndex = 0;
             this.btnLichHen.Text = "Lịch Hẹn";
-            this.btnLichHen.UseVisualStyleBackColor = true;
+            this.btnLichHen.UseVisualStyleBackColor = false;
             this.btnLichHen.Click += new System.EventHandler(this.btnLichHen_Click);
             // 
             // btnDanhGia
             // 
             this.btnDanhGia.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnDanhGia.Location = new System.Drawing.Point(315, 21);
+            this.btnDanhGia.Location = new System.Drawing.Point(646, 21);
             this.btnDanhGia.Name = "btnDanhGia";
             this.btnDanhGia.Size = new System.Drawing.Size(105, 30);
             this.btnDanhGia.TabIndex = 0;
             this.btnDanhGia.Text = "Đánh Giá";
             this.btnDanhGia.UseVisualStyleBackColor = true;
+            this.btnDanhGia.Visible = false;
             this.btnDanhGia.Click += new System.EventHandler(this.btnDanhGia_Click);
             // 
             // btnThongKe
             // 
+            this.btnThongKe.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.btnThongKe.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnThongKe.Location = new System.Drawing.Point(417, 21);
+            this.btnThongKe.Location = new System.Drawing.Point(317, 21);
             this.btnThongKe.Name = "btnThongKe";
             this.btnThongKe.Size = new System.Drawing.Size(105, 30);
             this.btnThongKe.TabIndex = 0;
             this.btnThongKe.Text = "Thống Kê";
-            this.btnThongKe.UseVisualStyleBackColor = true;
+            this.btnThongKe.UseVisualStyleBackColor = false;
             this.btnThongKe.Click += new System.EventHandler(this.btnThongKe_Click);
             // 
             // btnTaiKhoan
             // 
+            this.btnTaiKhoan.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnTaiKhoan.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnTaiKhoan.Location = new System.Drawing.Point(519, 21);
+            this.btnTaiKhoan.Location = new System.Drawing.Point(419, 21);
             this.btnTaiKhoan.Name = "btnTaiKhoan";
             this.btnTaiKhoan.Size = new System.Drawing.Size(105, 30);
             this.btnTaiKhoan.TabIndex = 0;
             this.btnTaiKhoan.Text = "Tài Khoản";
-            this.btnTaiKhoan.UseVisualStyleBackColor = true;
+            this.btnTaiKhoan.UseVisualStyleBackColor = false;
             this.btnTaiKhoan.Click += new System.EventHandler(this.btnTaiKhoan_Click);
             // 
             // panel1
