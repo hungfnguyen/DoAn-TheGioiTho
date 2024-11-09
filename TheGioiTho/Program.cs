@@ -24,7 +24,7 @@ namespace TheGioiTho
             //chay ben nguoi dung
             Application.Run(new FrmDangNhap());
 
-            //Application.Run(new TrangNguoiDung(2));
+            //Application.Run(new TrangNguoiDung(1));
 
             //Application.Run(new FrmTho());
         }

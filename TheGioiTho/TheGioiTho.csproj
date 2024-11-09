@@ -79,6 +79,7 @@
     <Compile Include="Controller\FrmDangNhap.Designer.cs">
       <DependentUpon>FrmDangNhap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Controller\ImageController.cs" />
     <Compile Include="Controller\ThoController\Calendar\UC_Day.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -205,10 +206,10 @@
     <Compile Include="Controller\UserController\Form\XemTopTho.Designer.cs">
       <DependentUpon>XemTopTho.cs</DependentUpon>
     </Compile>
-    <Compile Include="Controller\UserController\UC_BaiDang.cs">
+    <Compile Include="Controller\UserController\UserControl\UC_BaiDang.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Controller\UserController\UC_BaiDang.Designer.cs">
+    <Compile Include="Controller\UserController\UserControl\UC_BaiDang.Designer.cs">
       <DependentUpon>UC_BaiDang.cs</DependentUpon>
     </Compile>
     <Compile Include="Controller\UserController\UserControl\ChiTietLich.cs">
@@ -334,7 +335,7 @@
     <EmbeddedResource Include="Controller\UserController\Form\XemTopTho.resx">
       <DependentUpon>XemTopTho.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Controller\UserController\UC_BaiDang.resx">
+    <EmbeddedResource Include="Controller\UserController\UserControl\UC_BaiDang.resx">
       <DependentUpon>UC_BaiDang.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controller\UserController\UserControl\ChiTietLich.resx">
@@ -385,7 +386,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Service\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

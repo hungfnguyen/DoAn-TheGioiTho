@@ -5,34 +5,28 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using TheGioiTho.DAO;
 using TheGioiTho.Model;
 using TheGioiTho.Config;
+using TheGioiTho.Controller;
 
 namespace TheGioiTho.Controller
 {
     public partial class UC_DangBaiTimTho : UserControl
     {
-        
+
         private BaiDangNguoiDungDAO baiDangNguoiDungDAO;
         private int idNguoiDung;
-        private string imagePath;
-        private static readonly string IMAGE_FOLDER = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+        private string imageName; // Đổi imagePath thành imageName để lưu tên file
+        private readonly ImageController imageController; // Thêm ImageController
 
         public UC_DangBaiTimTho(int idNguoiDung)
         {
             InitializeComponent();
             baiDangNguoiDungDAO = new BaiDangNguoiDungDAO();
             this.idNguoiDung = idNguoiDung;
-
-            if (!Directory.Exists(IMAGE_FOLDER))
-            {
-                Directory.CreateDirectory(IMAGE_FOLDER);
-            }
+            imageController = new ImageController(); // Khởi tạo ImageController
         }
 
         private void UC_DangBaiTimTho_Load(object sender, EventArgs e)
@@ -68,22 +62,27 @@ namespace TheGioiTho.Controller
                 openFileDialog.Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF";
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    string sourceFile = openFileDialog.FileName;
-                    string fileName = Path.GetFileName(sourceFile);
-                    string destFile = Path.Combine(IMAGE_FOLDER, fileName);
-
-                    if (File.Exists(destFile))
+                    try
                     {
-                        string fileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName);
-                        string fileExtension = Path.GetExtension(fileName);
-                        fileName = $"{fileNameWithoutExtension}_{DateTime.Now:yyyyMMddHHmmss}{fileExtension}";
-                        destFile = Path.Combine(IMAGE_FOLDER, fileName);
-                    }
+                        using (var image = Image.FromFile(openFileDialog.FileName))
+                        {
+                            // Tạo tên file mới bằng ImageController
+                            imageName = imageController.GenerateFileName(openFileDialog.FileName);
 
-                    File.Copy(sourceFile, destFile, true);
-                    imagePath = destFile;
-                    picHinhAnh.Image = new Bitmap(destFile);
-                    picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
+                            // Lưu ảnh bằng ImageController
+                            imageController.SaveImage(image, imageName);
+
+                            // Hiển thị ảnh lên PictureBox
+                            picHinhAnh.Image?.Dispose(); // Giải phóng ảnh cũ nếu có
+                            picHinhAnh.Image = imageController.LoadImage(imageName);
+                            picHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Lỗi khi thêm hình ảnh: {ex.Message}");
+                        imageName = null;
+                    }
                 }
             }
         }
@@ -99,13 +98,13 @@ namespace TheGioiTho.Controller
                     {
                         try
                         {
-                            // 1. Thêm bài đăng
+                            // 1. Thêm bài đăng - Sử dụng imageName thay vì imagePath
                             BaiDang baiDang = new BaiDang
                             {
                                 IDLinhVuc = (int)cmbCongViec.SelectedValue,
                                 TieuDe = txtTieuDe.Text,
                                 MoTa = txtMoTa.Text,
-                                HinhAnh = imagePath
+                                HinhAnh = imageName // Lưu tên file thay vì đường dẫn đầy đủ
                             };
                             int newBaiDangId = baiDangNguoiDungDAO.ThemBaiDang(baiDang, conn, transaction);
                             if (newBaiDangId > 0)
@@ -170,7 +169,7 @@ namespace TheGioiTho.Controller
                 MessageBox.Show("Vui lòng nhập mô tả chi tiết.");
                 return false;
             }
-            if (string.IsNullOrEmpty(imagePath))
+            if (string.IsNullOrEmpty(imageName)) // Đổi imagePath thành imageName
             {
                 MessageBox.Show("Vui lòng thêm hình ảnh mô tả.");
                 return false;
@@ -185,8 +184,9 @@ namespace TheGioiTho.Controller
             dtpLichThoDen.Value = DateTime.Today;
             cmbChonGio.SelectedIndex = -1;
             txtMoTa.Clear();
+            picHinhAnh.Image?.Dispose();
             picHinhAnh.Image = null;
-            imagePath = null;
+            imageName = null; // Đổi imagePath thành imageName
         }
 
         private void panel1_Paint(object sender, PaintEventArgs e)

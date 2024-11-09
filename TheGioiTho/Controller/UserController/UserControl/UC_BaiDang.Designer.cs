@@ -29,10 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.baiDangNguoiDungTableAdapter = new TheGioiTho.DoAnTheGioiThoDataSetTableAdapters.BaiDangNguoiDungTableAdapter();
-            this.doAnTheGioiThoDataSet = new TheGioiTho.DoAnTheGioiThoDataSet();
             this.baiDangNguoiDungBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.dgvBaiDangTho = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
             this.txtT = new System.Windows.Forms.TextBox();
@@ -56,39 +53,11 @@
             this.txtHinhAnh = new System.Windows.Forms.TextBox();
             this.btnTimKiem = new System.Windows.Forms.Button();
             this.txtTimKiem = new System.Windows.Forms.TextBox();
-            ((System.ComponentModel.ISupportInitialize)(this.doAnTheGioiThoDataSet)).BeginInit();
+            this.dgvBaiDangTho = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.baiDangNguoiDungBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBaiDangTho)).BeginInit();
             this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBaiDangTho)).BeginInit();
             this.SuspendLayout();
-            // 
-            // baiDangNguoiDungTableAdapter
-            // 
-            this.baiDangNguoiDungTableAdapter.ClearBeforeFill = true;
-            // 
-            // doAnTheGioiThoDataSet
-            // 
-            this.doAnTheGioiThoDataSet.DataSetName = "DoAnTheGioiThoDataSet";
-            this.doAnTheGioiThoDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // baiDangNguoiDungBindingSource
-            // 
-            this.baiDangNguoiDungBindingSource.DataMember = "BaiDangNguoiDung";
-            this.baiDangNguoiDungBindingSource.DataSource = this.doAnTheGioiThoDataSet;
-            // 
-            // dgvBaiDangTho
-            // 
-            this.dgvBaiDangTho.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
-            this.dgvBaiDangTho.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvBaiDangTho.Location = new System.Drawing.Point(23, 55);
-            this.dgvBaiDangTho.Name = "dgvBaiDangTho";
-            this.dgvBaiDangTho.RowHeadersWidth = 51;
-            this.dgvBaiDangTho.RowTemplate.Height = 24;
-            this.dgvBaiDangTho.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.dgvBaiDangTho.Size = new System.Drawing.Size(807, 456);
-            this.dgvBaiDangTho.TabIndex = 2;
-            this.dgvBaiDangTho.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBaiDangTho_CellClick_1);
-            this.dgvBaiDangTho.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBaiDangTho_CellContentClick);
             // 
             // panel1
             // 
@@ -300,32 +269,39 @@
             this.txtTimKiem.Size = new System.Drawing.Size(262, 22);
             this.txtTimKiem.TabIndex = 52;
             // 
+            // dgvBaiDangTho
+            // 
+            this.dgvBaiDangTho.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvBaiDangTho.Location = new System.Drawing.Point(0, 55);
+            this.dgvBaiDangTho.Name = "dgvBaiDangTho";
+            this.dgvBaiDangTho.RowHeadersWidth = 51;
+            this.dgvBaiDangTho.RowTemplate.Height = 24;
+            this.dgvBaiDangTho.Size = new System.Drawing.Size(845, 548);
+            this.dgvBaiDangTho.TabIndex = 55;
+            this.dgvBaiDangTho.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBaiDangTho_CellClick_1);
+            this.dgvBaiDangTho.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvBaiDangTho_CellContentClick);
+            // 
             // UC_BaiDang
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.dgvBaiDangTho);
             this.Controls.Add(this.btnTimKiem);
             this.Controls.Add(this.txtTimKiem);
-            this.Controls.Add(this.dgvBaiDangTho);
             this.Controls.Add(this.panel1);
             this.Name = "UC_BaiDang";
             this.Size = new System.Drawing.Size(1309, 906);
-            ((System.ComponentModel.ISupportInitialize)(this.doAnTheGioiThoDataSet)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.baiDangNguoiDungBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvBaiDangTho)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvBaiDangTho)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-
-        private DoAnTheGioiThoDataSetTableAdapters.BaiDangNguoiDungTableAdapter baiDangNguoiDungTableAdapter;
-        private DoAnTheGioiThoDataSet doAnTheGioiThoDataSet;
         private System.Windows.Forms.BindingSource baiDangNguoiDungBindingSource;
-        private System.Windows.Forms.DataGridView dgvBaiDangTho;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label label11;
         private System.Windows.Forms.TextBox txtT;
@@ -349,5 +325,6 @@
         private System.Windows.Forms.TextBox txtHinhAnh;
         private System.Windows.Forms.Button btnTimKiem;
         private System.Windows.Forms.TextBox txtTimKiem;
+        private System.Windows.Forms.DataGridView dgvBaiDangTho;
     }
 }

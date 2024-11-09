@@ -168,20 +168,6 @@
             this.cmbChonGio.FlatStyle = System.Windows.Forms.FlatStyle.System;
             this.cmbChonGio.Font = new System.Drawing.Font("Segoe UI Semilight", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbChonGio.FormattingEnabled = true;
-            this.cmbChonGio.Items.AddRange(new object[] {
-            "07:00",
-            "08:00",
-            "09:00",
-            "10:00",
-            "11:00",
-            "12:00",
-            "13:00",
-            "14:00",
-            "15:00",
-            "16:00",
-            "17:00",
-            "18:00",
-            "19:00"});
             this.cmbChonGio.Location = new System.Drawing.Point(473, 214);
             this.cmbChonGio.Name = "cmbChonGio";
             this.cmbChonGio.Size = new System.Drawing.Size(107, 36);

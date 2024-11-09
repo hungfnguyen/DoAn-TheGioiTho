@@ -231,7 +231,7 @@
             this.cbChonCongViec.Name = "cbChonCongViec";
             this.cbChonCongViec.Size = new System.Drawing.Size(307, 24);
             this.cbChonCongViec.TabIndex = 12;
-            this.cbChonCongViec.SelectedIndexChanged += new System.EventHandler(this.cbChonCongViec_SelectedIndexChanged);
+            
             // 
             // btnQuanLyBaiDang
             // 
@@ -280,7 +280,6 @@
             this.Controls.Add(this.lblTenKhachHang);
             this.Name = "UC_DangBai";
             this.Size = new System.Drawing.Size(1189, 462);
-            this.Load += new System.EventHandler(this.UC_DangBai_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();

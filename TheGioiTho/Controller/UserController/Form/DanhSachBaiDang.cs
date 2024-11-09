@@ -4,6 +4,7 @@ using System.IO;
 using System.Windows.Forms;
 using TheGioiTho.DAO;
 using TheGioiTho.Model;
+using TheGioiTho.Controller;
 using System.Drawing;  
 
 namespace TheGioiTho
@@ -11,24 +12,21 @@ namespace TheGioiTho
     public partial class DanhSachBaiDang : Form
     {
         private BaiDangNguoiDungDAO baiDangDAO;
-        private readonly int idNguoiDung;  // Thêm biến idNguoiDung
-        private static readonly string IMAGE_FOLDER = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images");
+        private readonly int idNguoiDung;
+        private readonly ImageController imageController; // Thêm ImageController
 
-        public DanhSachBaiDang(int idNguoiDung)  // Thêm tham số vào constructor
+        public DanhSachBaiDang(int idNguoiDung)
         {
             InitializeComponent();
             InitializeDataGridView();
             baiDangDAO = new BaiDangNguoiDungDAO();
-            this.idNguoiDung = idNguoiDung;  // Lưu idNguoiDung
-
-            if (!Directory.Exists(IMAGE_FOLDER))
-            {
-                Directory.CreateDirectory(IMAGE_FOLDER);
-            }
+            this.idNguoiDung = idNguoiDung;
+            imageController = new ImageController(); // Khởi tạo ImageController
         }
 
         private void InitializeDataGridView()
         {
+            // Giữ nguyên code cũ
             dgvDanhSachBaiDang = new DataGridView();
             dgvDanhSachBaiDang.Dock = DockStyle.Fill;
 
@@ -49,7 +47,6 @@ namespace TheGioiTho
             dgvDanhSachBaiDang.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgvDanhSachBaiDang.AllowUserToAddRows = false;
             dgvDanhSachBaiDang.ReadOnly = true;
-            
 
             // Điều chỉnh chiều cao của hàng để hiển thị hình ảnh tốt hơn
             dgvDanhSachBaiDang.RowTemplate.Height = 80;
@@ -79,21 +76,14 @@ namespace TheGioiTho
                     Image hinhAnh = null;
                     if (!string.IsNullOrEmpty(baiDang.HinhAnh))
                     {
-                        string imagePath = Path.Combine(IMAGE_FOLDER, baiDang.HinhAnh);
-                        if (File.Exists(imagePath))
+                        try
                         {
-                            try
-                            {
-                                using (var stream = new FileStream(imagePath, FileMode.Open, FileAccess.Read))
-                                {
-                                    hinhAnh = Image.FromStream(stream);
-                                }
-                            }
-                            catch (Exception ex)
-                            {
-                                // Sử dụng hình ảnh mặc định hoặc để null nếu không load được
-                                Console.WriteLine($"Lỗi khi load hình ảnh: {ex.Message}");
-                            }
+                            // Sử dụng ImageController để load ảnh
+                            hinhAnh = imageController.LoadImage(baiDang.HinhAnh);
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Lỗi khi load hình ảnh: {ex.Message}");
                         }
                     }
 
@@ -102,14 +92,14 @@ namespace TheGioiTho
                         baiDang.IDLinhVuc,
                         baiDang.TieuDe,
                         baiDang.MoTa,
-                        hinhAnh // Thêm hình ảnh vào cột
+                        hinhAnh
                     );
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Có lỗi xảy ra khi tải danh sách bài đăng: {ex.Message}", "Lỗi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Có lỗi xảy ra khi tải danh sách bài đăng: {ex.Message}",
+                    "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -126,6 +116,8 @@ namespace TheGioiTho
                 }
             }
         }
+
+        
 
         private void DgvDanhSachBaiDang_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
