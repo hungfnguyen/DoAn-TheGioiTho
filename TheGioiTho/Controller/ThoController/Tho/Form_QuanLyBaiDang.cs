@@ -16,10 +16,14 @@ namespace TheGioiTho.Controller.Tho
 {
     public partial class Form_QuanLyBaiDang : Form
     {
-        private bool isDataChanged = false; // Theo dõi thay đổi dữ liệu
+        private bool isDataChanged = false;
+        private readonly ImageController imageController;
+        private string imageName; // Thêm biến lưu tên file ảnh
+
         public Form_QuanLyBaiDang()
         {
             InitializeComponent();
+            imageController = new ImageController(); // Khởi tạo ImageController
             LoadLinhVuc();
         }
 
@@ -30,52 +34,45 @@ namespace TheGioiTho.Controller.Tho
 
         private void Form_QuanLyBaiDang_Load(object sender, EventArgs e)
         {
-            // Tải danh sách bài đăng
             DataTable dataTable = LayDanhSachBaiDang();
             dgvQuanLyBaiDang.DataSource = dataTable;
 
-            // Ẩn cột IDBaiDang
             dgvQuanLyBaiDang.Columns["IDBaiDang"].Visible = false;
-            dgvQuanLyBaiDang.Columns["HinhAnh"].Visible = false; // Ẩn cột HinhAnh chứa đường dẫn
+            dgvQuanLyBaiDang.Columns["HinhAnh"].Visible = false;
 
-            // Kiểm tra và thêm cột hình ảnh chỉ nếu nó chưa tồn tại
             if (!dgvQuanLyBaiDang.Columns.Contains("HinhAnhDisplay"))
             {
                 DataGridViewImageColumn imageColumn = new DataGridViewImageColumn
                 {
-                    Name = "HinhAnhDisplay", // Tên cột mới để hiển thị hình ảnh
-                    HeaderText = "Hình Ảnh", // Tiêu đề cột
-                    ImageLayout = DataGridViewImageCellLayout.Stretch // Đặt chế độ hiển thị hình ảnh to hơn
+                    Name = "HinhAnhDisplay",
+                    HeaderText = "Hình Ảnh",
+                    ImageLayout = DataGridViewImageCellLayout.Zoom
                 };
                 dgvQuanLyBaiDang.Columns.Add(imageColumn);
             }
 
-            // Tăng chiều cao của các hàng để hiển thị hình ảnh lớn hơn
-            dgvQuanLyBaiDang.RowTemplate.Height = 150; // Chiều cao của hàng, tùy chỉnh theo nhu cầu
+            dgvQuanLyBaiDang.RowTemplate.Height = 150;
 
-            // Hiển thị hình ảnh trong DataGridView
+            // Sử dụng ImageController để load ảnh
             foreach (DataGridViewRow row in dgvQuanLyBaiDang.Rows)
             {
-                // Lấy đường dẫn hình ảnh từ DataTable
-                string imagePath = row.Cells["HinhAnh"].Value?.ToString(); // Lấy đường dẫn hình ảnh
-
-                if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath)) // Kiểm tra đường dẫn
+                string fileName = row.Cells["HinhAnh"].Value?.ToString();
+                if (!string.IsNullOrEmpty(fileName))
                 {
                     try
                     {
-                        // Đọc hình ảnh từ đường dẫn và gán vào cột hình ảnh
-                        Image img = Image.FromFile(imagePath);
+                        Image img = imageController.LoadImage(fileName);
                         row.Cells["HinhAnhDisplay"].Value = img;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Không thể tải hình ảnh: {ex.Message}");
-                        row.Cells["HinhAnhDisplay"].Value = null; // Nếu có lỗi, gán giá trị null
+                        Console.WriteLine($"Không thể tải hình ảnh: {ex.Message}");
+                        row.Cells["HinhAnhDisplay"].Value = null;
                     }
                 }
                 else
                 {
-                    row.Cells["HinhAnhDisplay"].Value = null; // Nếu không có hình ảnh, để null
+                    row.Cells["HinhAnhDisplay"].Value = null;
                 }
             }
         }
@@ -208,13 +205,12 @@ namespace TheGioiTho.Controller.Tho
 
             int idLinhVuc = Convert.ToInt32(cbChonCongViec.SelectedValue);
 
-            // Lấy đường dẫn ảnh từ TextBox
-            string imagePath = txtHinhAnhDuongDan.Text;
-
-            // Nếu không có ảnh mới, giữ nguyên ảnh cũ
-            if (string.IsNullOrEmpty(imagePath))
+            // Sử dụng tên file ảnh đã lưu
+            string imageNameToSave = imageName;
+            if (string.IsNullOrEmpty(imageNameToSave))
             {
-                imagePath = dgvQuanLyBaiDang.SelectedRows[0].Cells["HinhAnh"].Value?.ToString();
+                // Nếu không có ảnh mới, giữ nguyên ảnh cũ
+                imageNameToSave = dgvQuanLyBaiDang.SelectedRows[0].Cells["HinhAnh"].Value?.ToString();
             }
 
             using (SqlConnection conn = Config.DBConnection.GetConnection())
@@ -222,26 +218,19 @@ namespace TheGioiTho.Controller.Tho
                 try
                 {
                     conn.Open();
-                    string storedProcedure = "sp_CapNhatBaiDang"; // Tên stored procedure
-
-                    using (SqlCommand cmd = new SqlCommand(storedProcedure, conn))
+                    using (SqlCommand cmd = new SqlCommand("sp_CapNhatBaiDang", conn))
                     {
-                        cmd.CommandType = CommandType.StoredProcedure; // Đặt loại command là stored procedure
-
-                        // Truyền tham số cho stored procedure
+                        cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.AddWithValue("@IDBaiDang", idBaiDang);
                         cmd.Parameters.AddWithValue("@TieuDe", txtTieuDe.Text);
                         cmd.Parameters.AddWithValue("@MoTa", txtMoTa.Text);
-                        cmd.Parameters.AddWithValue("@HinhAnh", imagePath);
+                        cmd.Parameters.AddWithValue("@HinhAnh", imageNameToSave);
                         cmd.Parameters.AddWithValue("@IDLinhVuc", idLinhVuc);
                         cmd.Parameters.AddWithValue("@GiaTien", decimal.Parse(txtGiaTien.Text));
                         cmd.Parameters.AddWithValue("@ThoiGianThucHien", txtThoiGianThucHien.Text);
 
-                        // Thực thi stored procedure
                         cmd.ExecuteNonQuery();
-
                         MessageBox.Show("Cập nhật bài đăng thành công!");
-                        dgvQuanLyBaiDang.DataSource = LayDanhSachBaiDang(); // Cập nhật lại DataGridView
                         RefreshDataGrid();
                     }
                 }
@@ -254,25 +243,24 @@ namespace TheGioiTho.Controller.Tho
 
         private void RefreshDataGrid()
         {
-            dgvQuanLyBaiDang.DataSource = LayDanhSachBaiDang(); // Tải lại dữ liệu
+            dgvQuanLyBaiDang.DataSource = LayDanhSachBaiDang();
 
-            // Ẩn cột không cần thiết
             dgvQuanLyBaiDang.Columns["IDBaiDang"].Visible = false;
             dgvQuanLyBaiDang.Columns["HinhAnh"].Visible = false;
 
-            // Hiển thị hình ảnh trong DataGridView
             foreach (DataGridViewRow row in dgvQuanLyBaiDang.Rows)
             {
-                string imagePath = row.Cells["HinhAnh"].Value?.ToString();
-                if (!string.IsNullOrEmpty(imagePath) && System.IO.File.Exists(imagePath))
+                string fileName = row.Cells["HinhAnh"].Value?.ToString();
+                if (!string.IsNullOrEmpty(fileName))
                 {
                     try
                     {
-                        row.Cells["HinhAnhDisplay"].Value = Image.FromFile(imagePath);
+                        Image img = imageController.LoadImage(fileName);
+                        row.Cells["HinhAnhDisplay"].Value = img;
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Không thể tải hình ảnh: {ex.Message}");
+                        Console.WriteLine($"Không thể tải hình ảnh: {ex.Message}");
                         row.Cells["HinhAnhDisplay"].Value = null;
                     }
                 }
@@ -314,9 +302,58 @@ namespace TheGioiTho.Controller.Tho
                 ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.bmp";
                 if (ofd.ShowDialog() == DialogResult.OK)
                 {
-                    string selectedImagePath = ofd.FileName;
-                    txtHinhAnhDuongDan.Text = selectedImagePath; // Nếu muốn hiện đường dẫn trong TextBox
-                    pbHinhAnh.Image = Image.FromFile(selectedImagePath); // Hiển thị ảnh trong PictureBox
+                    try
+                    {
+                        if (!imageController.IsValidImageFile(ofd.FileName))
+                        {
+                            MessageBox.Show("File không phải là ảnh hợp lệ!");
+                            return;
+                        }
+
+                        using (var image = Image.FromFile(ofd.FileName))
+                        {
+                            // Tạo tên file mới
+                            imageName = imageController.GenerateFileName(ofd.FileName);
+
+                            // Lưu ảnh bằng ImageController
+                            imageController.SaveImage(image, imageName);
+
+                            // Hiển thị ảnh lên PictureBox
+                            if (pbHinhAnh.Image != null)
+                            {
+                                pbHinhAnh.Image.Dispose();
+                            }
+                            pbHinhAnh.Image = imageController.LoadImage(imageName);
+                            pbHinhAnh.SizeMode = PictureBoxSizeMode.Zoom;
+
+                            txtHinhAnhDuongDan.Text = imageName; // Lưu tên file thay vì đường dẫn
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Lỗi khi xử lý ảnh: " + ex.Message);
+                        imageName = null;
+                    }
+                }
+            }
+        }
+
+        protected override void OnFormClosing(FormClosingEventArgs e)
+        {
+            base.OnFormClosing(e);
+
+            // Giải phóng hình ảnh trong PictureBox
+            if (pbHinhAnh.Image != null)
+            {
+                pbHinhAnh.Image.Dispose();
+            }
+
+            // Giải phóng hình ảnh trong DataGridView
+            foreach (DataGridViewRow row in dgvQuanLyBaiDang.Rows)
+            {
+                if (row.Cells["HinhAnhDisplay"].Value is Image img)
+                {
+                    img.Dispose();
                 }
             }
         }

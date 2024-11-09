@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.dgvBaiDangNguoiDung = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
@@ -47,14 +46,9 @@
             this.lblDiaDiemLamViec = new System.Windows.Forms.Label();
             this.lblSoDienThoai = new System.Windows.Forms.Label();
             this.lblTenKhachHang = new System.Windows.Forms.Label();
-            this.doAnTheGioiThoDataSet = new TheGioiTho.DoAnTheGioiThoDataSet();
-            this.baiDangNguoiDungBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.baiDangNguoiDungTableAdapter = new TheGioiTho.DoAnTheGioiThoDataSetTableAdapters.BaiDangNguoiDungTableAdapter();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBaiDangNguoiDung)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.doAnTheGioiThoDataSet)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.baiDangNguoiDungBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // dgvBaiDangNguoiDung
@@ -88,7 +82,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(370, 456);
             this.panel1.TabIndex = 1;
-            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
             // panel2
             // 
@@ -103,7 +96,6 @@
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(355, 140);
             this.panel2.TabIndex = 4;
-            this.panel2.Paint += new System.Windows.Forms.PaintEventHandler(this.panel2_Paint);
             // 
             // btnDatLich
             // 
@@ -121,7 +113,6 @@
             this.txtGiaTien.Name = "txtGiaTien";
             this.txtGiaTien.Size = new System.Drawing.Size(144, 22);
             this.txtGiaTien.TabIndex = 3;
-            this.txtGiaTien.TextChanged += new System.EventHandler(this.txtGiaTien_TextChanged);
             // 
             // txtThoiGianThucHien
             // 
@@ -129,7 +120,6 @@
             this.txtThoiGianThucHien.Name = "txtThoiGianThucHien";
             this.txtThoiGianThucHien.Size = new System.Drawing.Size(144, 22);
             this.txtThoiGianThucHien.TabIndex = 3;
-            this.txtThoiGianThucHien.TextChanged += new System.EventHandler(this.txtThoiGianThucHien_TextChanged);
             // 
             // label4
             // 
@@ -139,7 +129,6 @@
             this.label4.Size = new System.Drawing.Size(94, 16);
             this.label4.TabIndex = 2;
             this.label4.Text = "Giá Tiền (vnd):";
-            this.label4.Click += new System.EventHandler(this.label4_Click);
             // 
             // label3
             // 
@@ -149,7 +138,6 @@
             this.label3.Size = new System.Drawing.Size(162, 16);
             this.label3.TabIndex = 2;
             this.label3.Text = "Thời Gian Thực Hiện (giờ):";
-            this.label3.Click += new System.EventHandler(this.label3_Click);
             // 
             // txtGhiChu
             // 
@@ -157,7 +145,6 @@
             this.txtGhiChu.Name = "txtGhiChu";
             this.txtGhiChu.Size = new System.Drawing.Size(307, 22);
             this.txtGhiChu.TabIndex = 3;
-            this.txtGhiChu.TextChanged += new System.EventHandler(this.txtGhiChu_TextChanged);
             // 
             // txtThoiGianLamViec
             // 
@@ -165,7 +152,6 @@
             this.txtThoiGianLamViec.Name = "txtThoiGianLamViec";
             this.txtThoiGianLamViec.Size = new System.Drawing.Size(307, 22);
             this.txtThoiGianLamViec.TabIndex = 3;
-            this.txtThoiGianLamViec.TextChanged += new System.EventHandler(this.txtThoiGianLamViec_TextChanged);
             // 
             // txtDiaDiemLamViec
             // 
@@ -173,7 +159,6 @@
             this.txtDiaDiemLamViec.Name = "txtDiaDiemLamViec";
             this.txtDiaDiemLamViec.Size = new System.Drawing.Size(307, 22);
             this.txtDiaDiemLamViec.TabIndex = 3;
-            this.txtDiaDiemLamViec.TextChanged += new System.EventHandler(this.txtDiaDiemLamViec_TextChanged);
             // 
             // txtSoDienThoai
             // 
@@ -181,7 +166,6 @@
             this.txtSoDienThoai.Name = "txtSoDienThoai";
             this.txtSoDienThoai.Size = new System.Drawing.Size(307, 22);
             this.txtSoDienThoai.TabIndex = 3;
-            this.txtSoDienThoai.TextChanged += new System.EventHandler(this.txtSoDienThoai_TextChanged);
             // 
             // txtTenKhachHang
             // 
@@ -189,7 +173,6 @@
             this.txtTenKhachHang.Name = "txtTenKhachHang";
             this.txtTenKhachHang.Size = new System.Drawing.Size(307, 22);
             this.txtTenKhachHang.TabIndex = 3;
-            this.txtTenKhachHang.TextChanged += new System.EventHandler(this.txtTenKhachHang_TextChanged);
             // 
             // label2
             // 
@@ -199,7 +182,6 @@
             this.label2.Size = new System.Drawing.Size(56, 16);
             this.label2.TabIndex = 2;
             this.label2.Text = "Ghi Chú:";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // label1
             // 
@@ -209,7 +191,6 @@
             this.label1.Size = new System.Drawing.Size(124, 16);
             this.label1.TabIndex = 2;
             this.label1.Text = "Thời Gian Làm Việc";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblDiaDiemLamViec
             // 
@@ -219,7 +200,6 @@
             this.lblDiaDiemLamViec.Size = new System.Drawing.Size(120, 16);
             this.lblDiaDiemLamViec.TabIndex = 2;
             this.lblDiaDiemLamViec.Text = "Địa Điểm Làm Việc";
-            this.lblDiaDiemLamViec.Click += new System.EventHandler(this.lblDiaDiemLamViec_Click);
             // 
             // lblSoDienThoai
             // 
@@ -229,7 +209,6 @@
             this.lblSoDienThoai.Size = new System.Drawing.Size(92, 16);
             this.lblSoDienThoai.TabIndex = 2;
             this.lblSoDienThoai.Text = "Số Điện Thoại";
-            this.lblSoDienThoai.Click += new System.EventHandler(this.lblSoDienThoai_Click);
             // 
             // lblTenKhachHang
             // 
@@ -239,22 +218,6 @@
             this.lblTenKhachHang.Size = new System.Drawing.Size(107, 16);
             this.lblTenKhachHang.TabIndex = 1;
             this.lblTenKhachHang.Text = "Tên Khách Hàng";
-            this.lblTenKhachHang.Click += new System.EventHandler(this.lblTenKhachHang_Click);
-            // 
-            // doAnTheGioiThoDataSet
-            // 
-            this.doAnTheGioiThoDataSet.DataSetName = "DoAnTheGioiThoDataSet";
-            this.doAnTheGioiThoDataSet.SchemaSerializationMode = System.Data.SchemaSerializationMode.IncludeSchema;
-            // 
-            // baiDangNguoiDungBindingSource
-            // 
-            this.baiDangNguoiDungBindingSource.DataMember = "BaiDangNguoiDung";
-            this.baiDangNguoiDungBindingSource.DataSource = this.doAnTheGioiThoDataSet;
-            this.baiDangNguoiDungBindingSource.CurrentChanged += new System.EventHandler(this.baiDangNguoiDungBindingSource_CurrentChanged);
-            // 
-            // baiDangNguoiDungTableAdapter
-            // 
-            this.baiDangNguoiDungTableAdapter.ClearBeforeFill = true;
             // 
             // UC_TrangChu
             // 
@@ -269,8 +232,6 @@
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.doAnTheGioiThoDataSet)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.baiDangNguoiDungBindingSource)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -295,8 +256,5 @@
         private System.Windows.Forms.TextBox txtThoiGianLamViec;
         private System.Windows.Forms.TextBox txtDiaDiemLamViec;
         private System.Windows.Forms.TextBox txtSoDienThoai;
-        private System.Windows.Forms.BindingSource baiDangNguoiDungBindingSource;
-        private DoAnTheGioiThoDataSet doAnTheGioiThoDataSet;
-        private DoAnTheGioiThoDataSetTableAdapters.BaiDangNguoiDungTableAdapter baiDangNguoiDungTableAdapter;
     }
 }

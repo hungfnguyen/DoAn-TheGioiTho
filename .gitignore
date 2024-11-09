@@ -1,4 +1,4 @@
-# Bỏ qua file nhị phân
+# Bỏ qua file nhị phân và thư mục build
 .vs/
 TheGioiTho/bin/
 TheGioiTho/obj/
@@ -22,3 +22,10 @@ desktop.ini
 *.nupkg
 packages/
 
+# Cho phép thư mục Images và các file ảnh
+!TheGioiTho/Images/
+!TheGioiTho/Images/*.jpg
+!TheGioiTho/Images/*.jpeg
+!TheGioiTho/Images/*.png
+!TheGioiTho/Images/*.gif
+!TheGioiTho/Images/*.bmp

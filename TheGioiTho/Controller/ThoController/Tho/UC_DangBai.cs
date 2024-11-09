@@ -19,50 +19,55 @@ namespace TheGioiTho.Controller.Tho
     public partial class UC_DangBai : UserControl
     {
         private SqlConnection conn = Config.DBConnection.GetConnection();
-        string hinhAnh; // Giả sử bạn có txtHinhAnh
-
+        private string imageName; // Đổi hinhAnh thành imageName để lưu tên file
+        private readonly ImageController imageController; // Thêm ImageController
         private int idTho = UserSession.UserID;
+
+        public UC_DangBai()
+        {
+            InitializeComponent();
+            conn = DBConnection.GetConnection();
+            imageController = new ImageController(); // Khởi tạo ImageController
+            LoadThongTinTho();
+            LoadLinhVuc();
+        }
+
 
         private void btnDangBai_Click(object sender, EventArgs e)
         {
-            // Lấy dữ liệu từ các trường nhập liệu
             string tieuDe = txtTieuDe.Text.Trim();
             string moTa = txtMoTa.Text.Trim();
             string thoiGianThucHien = txtThoiGianThucHien.Text.Trim();
             decimal giaTien;
 
-            // Kiểm tra và chuyển đổi giá tiền
             if (!decimal.TryParse(txtGiaTien.Text.Trim(), out giaTien))
             {
                 MessageBox.Show("Vui lòng nhập giá tiền hợp lệ.");
                 return;
             }
 
-            int idLinhVuc = (int)cbChonCongViec.SelectedValue; // Lấy ID lĩnh vực đã chọn
-            
+            int idLinhVuc = (int)cbChonCongViec.SelectedValue;
 
             try
             {
-                // Kết nối đến cơ sở dữ liệu
                 conn.Open();
-
-                // Sử dụng Stored Procedure sp_ThemBaiDangTho
                 using (SqlCommand cmd = new SqlCommand("sp_ThemBaiDangTho", conn))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    // Truyền các tham số cho thủ tục
                     cmd.Parameters.AddWithValue("@IDLinhVuc", idLinhVuc);
                     cmd.Parameters.AddWithValue("@TieuDe", tieuDe);
                     cmd.Parameters.AddWithValue("@MoTa", moTa);
-                    cmd.Parameters.AddWithValue("@HinhAnh", hinhAnh);
+                    cmd.Parameters.AddWithValue("@HinhAnh", imageName); // Lưu tên file thay vì đường dẫn
                     cmd.Parameters.AddWithValue("@IDTho", idTho);
                     cmd.Parameters.AddWithValue("@GiaTien", giaTien);
                     cmd.Parameters.AddWithValue("@ThoiGianThucHien", thoiGianThucHien);
 
-                    // Thực thi Stored Procedure
                     cmd.ExecuteNonQuery();
                     MessageBox.Show("Đăng bài thành công!");
+
+                    // Clear form sau khi đăng bài thành công
+                    ClearForm();
                 }
             }
             catch (Exception ex)
@@ -71,27 +76,27 @@ namespace TheGioiTho.Controller.Tho
             }
             finally
             {
-                conn.Close(); // Đóng kết nối
+                conn.Close();
             }
         }
 
-        private void UC_DangBai_Load(object sender, EventArgs e)
+        // Thêm method để clear form
+        private void ClearForm()
         {
+            txtTieuDe.Clear();
+            txtMoTa.Clear();
+            txtThoiGianThucHien.Clear();
+            txtGiaTien.Clear();
+            cbChonCongViec.SelectedIndex = -1;
 
+            if (pictureBoxHinh.Image != null)
+            {
+                pictureBoxHinh.Image.Dispose();
+                pictureBoxHinh.Image = null;
+            }
+            imageName = null;
         }
 
-
- 
-
-
-        public UC_DangBai()
-        {
-            InitializeComponent();
-            conn = DBConnection.GetConnection(); // Lấy kết nối từ cấu hình
-            LoadThongTinTho(); // Gọi hàm khi UC được khởi tạo
-            // Gọi hàm để tải lĩnh vực tương ứng khi công việc được chọn
-            LoadLinhVuc();
-        }
 
         private void LoadThongTinTho()
         {
@@ -123,9 +128,14 @@ namespace TheGioiTho.Controller.Tho
             }
         }
 
-        private void cbChonCongViec_SelectedIndexChanged(object sender, EventArgs e)
+        // Giải phóng resource khi đóng form
+        protected override void OnHandleDestroyed(EventArgs e)
         {
-            
+            base.OnHandleDestroyed(e);
+            if (pictureBoxHinh.Image != null)
+            {
+                pictureBoxHinh.Image.Dispose();
+            }
         }
 
         private void LoadLinhVuc()
@@ -167,28 +177,42 @@ namespace TheGioiTho.Controller.Tho
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                // Thiết lập các thuộc tính cho OpenFileDialog
                 openFileDialog.Title = "Chọn tệp ảnh";
-                openFileDialog.Filter = "Tệp hình ảnh|*.jpg;*.jpeg;*.png;*.bmp|Tất cả các tệp|*.*"; // Chỉ cho phép chọn các loại tệp ảnh
-                openFileDialog.InitialDirectory = "C:\\"; // Thư mục mặc định khi mở hộp thoại
+                openFileDialog.Filter = "Tệp hình ảnh|*.jpg;*.jpeg;*.png;*.bmp|Tất cả các tệp|*.*";
+                openFileDialog.InitialDirectory = "C:\\";
 
-                // Hiển thị hộp thoại và kiểm tra nếu người dùng chọn tệp
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    // Lấy đường dẫn tệp đã chọn
-                    string filePath = openFileDialog.FileName;
-
-                    // Gán đường dẫn vào biến hinhAnh
-                    hinhAnh = filePath;
-
-                    // Nếu muốn, có thể tải và hiển thị hình ảnh
                     try
                     {
-                        pictureBoxHinh.Image = Image.FromFile(filePath); // Giả sử bạn có một PictureBox tên pictureBoxHinh
+                        // Kiểm tra file có phải là ảnh hợp lệ không
+                        if (!imageController.IsValidImageFile(openFileDialog.FileName))
+                        {
+                            MessageBox.Show("File không phải là ảnh hợp lệ!");
+                            return;
+                        }
+
+                        using (var image = Image.FromFile(openFileDialog.FileName))
+                        {
+                            // Tạo tên file mới
+                            imageName = imageController.GenerateFileName(openFileDialog.FileName);
+
+                            // Lưu ảnh bằng ImageController
+                            imageController.SaveImage(image, imageName);
+
+                            // Hiển thị ảnh lên PictureBox
+                            if (pictureBoxHinh.Image != null)
+                            {
+                                pictureBoxHinh.Image.Dispose();
+                            }
+                            pictureBoxHinh.Image = imageController.LoadImage(imageName);
+                            pictureBoxHinh.SizeMode = PictureBoxSizeMode.Zoom;
+                        }
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show("Lỗi khi tải ảnh: " + ex.Message);
+                        MessageBox.Show("Lỗi khi xử lý ảnh: " + ex.Message);
+                        imageName = null;
                     }
                 }
             }

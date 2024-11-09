@@ -5,6 +5,10 @@ using System.Windows.Forms;
 using TheGioiTho.Config;
 using TheGioiTho.Dao;
 using TheGioiTho.Model;
+using System.Drawing;
+using System.IO;
+using System.Drawing.Drawing2D;
+using System.Reflection;
 
 
 namespace TheGioiTho.Controller.UserController
@@ -13,21 +17,40 @@ namespace TheGioiTho.Controller.UserController
     {
 
         private TheGioiTho.Model.Tho tho;
-        
         private int idNguoiDung = UserSession.UserID;
         private TaiKhoanNguoiDungDao taiKhoanDao = new TaiKhoanNguoiDungDao();
-
         private readonly ThoDAO thoDAO;
-
         private NguoiDung user;
-        public UC_BaiDang(int id) 
+        private readonly ImageController imageController; // Thêm ImageController
+
+        public UC_BaiDang(int id)
         {
             InitializeComponent();
-            LoadBaiDang();  // Tải danh sách bài đăng thợ khi khởi tạo
-            dgvBaiDangTho.CellContentClick += new DataGridViewCellEventHandler(dgvBaiDangTho_CellContentClick);
+            imageController = new ImageController();
             thoDAO = new ThoDAO();
-            user = taiKhoanDao.LayThongTinNguoiDung(idNguoiDung); // Khởi tạo user tại đây
+            user = taiKhoanDao.LayThongTinNguoiDung(idNguoiDung);
             idNguoiDung = id;
+            // Thêm sự kiện Load
+            this.Load += UC_BaiDang_Load;
+            LoadBaiDang();
+        }
+
+        private void UC_BaiDang_Load(object sender, EventArgs e)
+        {
+            LoadBaiDang();
+            dgvBaiDangTho.CellContentClick += new DataGridViewCellEventHandler(dgvBaiDangTho_CellContentClick);
+        }
+
+        private void DgvBaiDangTho_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (e.ColumnIndex >= 0 && dgvBaiDangTho.Columns[e.ColumnIndex].Name == "HinhAnhDisplay")
+            {
+                if (e.Value != null && e.Value is Image)
+                {
+                    DataGridViewImageCell cell = (DataGridViewImageCell)dgvBaiDangTho.Rows[e.RowIndex].Cells[e.ColumnIndex];
+                    cell.ImageLayout = DataGridViewImageCellLayout.Zoom;
+                }
+            }
         }
 
 
@@ -37,14 +60,75 @@ namespace TheGioiTho.Controller.UserController
         {
             using (SqlConnection connection = DBConnection.GetConnection())
             {
-                // Thay đổi câu lệnh SQL để truy vấn từ View
+                // 1. Load dữ liệu
                 SqlDataAdapter dataAdapter = new SqlDataAdapter("SELECT * FROM dbo.XemTatCaBaiDangTho", connection);
                 DataTable dataTable = new DataTable();
                 dataAdapter.Fill(dataTable);
-                dgvBaiDangTho.DataSource = dataTable; // Gắn dữ liệu vào DataGridView
 
-                // Đảm bảo DataGridView tự động điều chỉnh cột cho phù hợp với nội dung
+                // 2. Xóa và tạo lại cột hình ảnh
+                dgvBaiDangTho.Columns.Clear(); // Xóa tất cả các cột
+
+                // 3. Set DataSource
+                dgvBaiDangTho.DataSource = dataTable;
+
+                // 4. Thêm cột hình ảnh
+                DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+                imageColumn.Name = "HinhAnhDisplay";
+                imageColumn.HeaderText = "Hình Ảnh";
+                imageColumn.ImageLayout = DataGridViewImageCellLayout.Zoom;
+                imageColumn.Width = 150;
+                dgvBaiDangTho.Columns.Add(imageColumn);
+
+                // 5. Cấu hình hiển thị
+                dgvBaiDangTho.RowTemplate.Height = 150;
                 dgvBaiDangTho.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+
+                // 6. Ẩn cột không cần thiết
+                if (dgvBaiDangTho.Columns.Contains("HinhAnh"))
+                    dgvBaiDangTho.Columns["HinhAnh"].Visible = false;
+                if (dgvBaiDangTho.Columns.Contains("IDBaiDang"))
+                    dgvBaiDangTho.Columns["IDBaiDang"].Visible = false;
+
+                // 7. Load ảnh cho từng dòng
+                foreach (DataGridViewRow row in dgvBaiDangTho.Rows)
+                {
+                    string fileName = row.Cells["HinhAnh"].Value?.ToString();
+                    Console.WriteLine($"Đang xử lý file: {fileName}");
+
+                    if (!string.IsNullOrEmpty(fileName))
+                    {
+                        try
+                        {
+                            using (Image originalImage = imageController.LoadImage(fileName))
+                            {
+                                if (originalImage != null)
+                                {
+                                    // Tạo bản sao của ảnh với kích thước phù hợp
+                                    int targetWidth = 150;
+                                    int targetHeight = 150;
+                                    using (Bitmap resizedImage = new Bitmap(targetWidth, targetHeight))
+                                    {
+                                        using (Graphics g = Graphics.FromImage(resizedImage))
+                                        {
+                                            g.InterpolationMode = InterpolationMode.HighQualityBicubic;
+                                            g.DrawImage(originalImage, 0, 0, targetWidth, targetHeight);
+                                        }
+                                        row.Cells["HinhAnhDisplay"].Value = new Bitmap(resizedImage);
+                                    }
+                                    Console.WriteLine($"Đã load thành công ảnh: {fileName}");
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"Lỗi khi load ảnh cho hàng {row.Index}: {ex.Message}");
+                        }
+                    }
+                }
+
+                // 8. Refresh và cập nhật giao diện
+                dgvBaiDangTho.Refresh();
+                Application.DoEvents();
             }
         }
 
@@ -153,29 +237,36 @@ namespace TheGioiTho.Controller.UserController
 
      
 
-        private void dgvBaiDangTho_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-           
-        }
-
         private void dgvBaiDangTho_CellClick_1(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex >= 0) // Kiểm tra xem người dùng có chọn dòng hợp lệ không
+            if (e.RowIndex >= 0)
             {
                 DataGridViewRow row = dgvBaiDangTho.Rows[e.RowIndex];
 
-                // Đổ dữ liệu vào các TextBox
                 txtT.Text = row.Cells["TieuDe"].Value.ToString();
                 txtMoTa.Text = row.Cells["MoTa"].Value.ToString();
                 txtGiaTien.Text = row.Cells["GiaTien"].Value.ToString();
                 txtThoiGianThucHien.Text = row.Cells["ThoiGianThucHien"].Value.ToString();
-                txtHoTenTho.Text = row.Cells["HoTen"].Value.ToString(); // HoTen của thợ
-                txtHinhAnh.Text = row.Cells["HinhAnh"].Value.ToString();
+                txtHoTenTho.Text = row.Cells["HoTen"].Value.ToString();
+                txtHinhAnh.Text = row.Cells["HinhAnh"].Value.ToString(); // Hiển thị tên file ảnh
                 txtTenLinhVuc.Text = row.Cells["TenLinhVuc"].Value.ToString();
 
-                // Đổ dữ liệu vào các DateTimePicker
-                // dtpNgayThoDen.Value = Convert.ToDateTime(row.Cells["NgayThoDen"].Value);
-                // dtpGioThoDen.Value = Convert.ToDateTime(row.Cells["GioThoDen"].Value);
+                // Hiển thị ảnh trong một PictureBox nếu bạn có
+                string fileName = row.Cells["HinhAnh"].Value?.ToString();
+                if (!string.IsNullOrEmpty(fileName))
+                {
+                    try
+                    {
+                        // Nếu bạn có PictureBox để hiển thị ảnh chi tiết
+                        // pictureBox.Image?.Dispose();
+                        // pictureBox.Image = imageController.LoadImage(fileName);
+                        // pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Không thể tải hình ảnh: {ex.Message}");
+                    }
+                }
             }
         }
 
@@ -256,6 +347,21 @@ namespace TheGioiTho.Controller.UserController
                 MessageBox.Show("Lỗi: " + ex.Message);
             }
         }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            base.OnHandleDestroyed(e);
+
+            // Giải phóng ảnh trong DataGridView
+            foreach (DataGridViewRow row in dgvBaiDangTho.Rows)
+            {
+                if (row.Cells["HinhAnhDisplay"].Value is Image img)
+                {
+                    img.Dispose();
+                }
+            }
+        }
+
     }
-    }
+}
 
