@@ -120,9 +120,8 @@ namespace TheGioiTho
             xemDanhGia.id = id;
             xemDanhGia.Show();
         }
-        private void DatLich(int idNguoiDung, int idBaiDang, int idTho, DateTime ngayThoDen, DateTime gioThoDen)
+        private void DatLich(int idNguoiDung, int idBaiDang, int idTho, DateTime ngayThoDen, TimeSpan gioThoDen)
         {
-            MessageBox.Show("dat");
             try
             {
                 thoDAO.DatLich(idNguoiDung, idBaiDang, idTho, ngayThoDen, gioThoDen);
@@ -141,9 +140,8 @@ namespace TheGioiTho
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("a@");
             DateTime ngay = dateTimePicker1.Value.Date;
-            DateTime gio = dateTimePicker2.Value.Date;
+            TimeSpan gio = dateTimePicker2.Value.TimeOfDay;
 
             int idTho = Convert.ToInt32(selectedRow.Cells[1].Value);
             int idBaiDang = Convert.ToInt32(selectedRow.Cells[2].Value);

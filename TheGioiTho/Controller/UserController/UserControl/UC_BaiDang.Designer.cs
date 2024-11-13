@@ -139,11 +139,13 @@
             // 
             // dtpNgayThoDen
             // 
-            this.dtpNgayThoDen.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dtpNgayThoDen.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtpNgayThoDen.Location = new System.Drawing.Point(140, 391);
             this.dtpNgayThoDen.Name = "dtpNgayThoDen";
             this.dtpNgayThoDen.Size = new System.Drawing.Size(262, 22);
             this.dtpNgayThoDen.TabIndex = 46;
+            this.dtpNgayThoDen.Value = new System.DateTime(2024, 11, 13, 19, 47, 0, 0);
+            this.dtpNgayThoDen.ValueChanged += new System.EventHandler(this.dtpNgayThoDen_ValueChanged);
             // 
             // label1
             // 
