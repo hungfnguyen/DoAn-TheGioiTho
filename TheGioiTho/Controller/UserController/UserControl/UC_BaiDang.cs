@@ -149,14 +149,19 @@ namespace TheGioiTho.Controller.UserController
             if (dgvBaiDangTho.SelectedRows.Count > 0)
             {
                 DataGridViewRow selectedRow = dgvBaiDangTho.SelectedRows[0]; // Lấy dòng được chọn đầu tiên
-                DateTime ngay = dtpNgayThoDen.Value.Date;
-                DateTime gio = dtpGioThoDen.Value.Date;
+                System.Globalization.CultureInfo.CurrentCulture = new System.Globalization.CultureInfo("en-US");
 
-                /*int idTho = Convert.ToInt32(selectedRow.Cells["IDTho"].Value);
+                // Lấy giá trị từ DateTimePicker và định dạng thành chuỗi theo yêu cầu
+                string formattedDate = dtpNgayThoDen.Value.ToString("yyyy-MM-dd");
+
+                // Chuyển đổi chuỗi thành DateTime
+                DateTime ngay = DateTime.Parse(formattedDate);
+                TimeSpan gio = TimeSpan.Parse(dtpGioThoDen.Value.ToString("HH:mm:ss"));
+                int idTho = Convert.ToInt32(selectedRow.Cells["IDTho"].Value);
                 int idBaiDang = Convert.ToInt32(selectedRow.Cells["IDBaiDang"].Value);
-                DatLich(idNguoiDung, idBaiDang, idTho, ngay, gio);*/
+                DatLich(idNguoiDung, idBaiDang, idTho, ngay, gio);
                         // Lấy thông tin từ các control trên form
-                        DateTime ngayThoDen = dtpNgayThoDen.Value.Date; // Ngày thợ đến
+                     /*   DateTime ngayThoDen = dtpNgayThoDen.Value.Date; // Ngày thợ đến
                         DateTime gioThoDen = dtpGioThoDen.Value; // Giờ thợ đến
                         DateTime thoiGianBatDau = ngayThoDen.Add(gioThoDen.TimeOfDay); // Hợp nhất ngày và giờ
                         decimal giaTien = Convert.ToDecimal(txtGiaTien.Text); // Giá tiền cho công việc
@@ -207,18 +212,19 @@ namespace TheGioiTho.Controller.UserController
                                     MessageBox.Show("Đặt lịch không thành công.");
                                 }
                             }
-                        }
+                        }*/
             }
             else
             {
                 MessageBox.Show("Vui lòng chọn bài đăng thợ!");
             }
         }
-        private void DatLich(int idNguoiDung, int idBaiDang, int idTho, DateTime ngayThoDen, DateTime gioThoDen)
+        private void DatLich(int idNguoiDung, int idBaiDang, int idTho, DateTime ngayThoDen, TimeSpan gioThoDen)
         {
             try
             {
                 thoDAO.DatLich(idNguoiDung, idBaiDang, idTho, ngayThoDen, gioThoDen);
+
             }
             catch (Exception ex)
             {
@@ -362,6 +368,10 @@ namespace TheGioiTho.Controller.UserController
             }
         }
 
+        private void dtpNgayThoDen_ValueChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

@@ -41,11 +41,10 @@ namespace TheGioiTho.Dao
             return ExecuteQuery(query);
         }
 
-        public void DatLich(int idNguoiDung, int idBaiDang, int idTho, DateTime ngayThoDen, DateTime gioThoDen)
+        public void DatLich(int idNguoiDung, int idBaiDang, int idTho, DateTime ngayThoDen, TimeSpan gioThoDen)
         {
             string query = $"EXEC DatLichThoKhiRanh @IDNguoiDung = {idNguoiDung}, @IDBaiDang = {idBaiDang}, @IDTho = {idTho}, " +
                            $"@NgayThoDen = '{ngayThoDen}', @GioThoDen = '{gioThoDen}';";
-
             ExecuteNonQuery1(query);
         }
 
@@ -100,6 +99,7 @@ namespace TheGioiTho.Dao
             {
                 try
                 {
+                    
                     connection.Open();
                     // Để lưu các thông báo PRINT
                     string printMessages = string.Empty;
@@ -110,7 +110,7 @@ namespace TheGioiTho.Dao
                         // Nối tất cả các thông báo lại thành một chuỗi
                         printMessages += e.Message + Environment.NewLine;
                     };
-
+                    
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.ExecuteNonQuery();
