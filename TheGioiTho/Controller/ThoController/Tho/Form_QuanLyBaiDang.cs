@@ -32,8 +32,9 @@ namespace TheGioiTho.Controller.Tho
 
         }
 
-        private void Form_QuanLyBaiDang_Load(object sender, EventArgs e)
-        {
+            private void Form_QuanLyBaiDang_Load(object sender, EventArgs e)
+            {
+
             DataTable dataTable = LayDanhSachBaiDang();
             dgvQuanLyBaiDang.DataSource = dataTable;
 
