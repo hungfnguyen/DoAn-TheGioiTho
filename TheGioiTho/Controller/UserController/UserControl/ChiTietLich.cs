@@ -31,7 +31,7 @@ namespace TheGioiTho.Controller
             {
                 // Hiển thị thông tin lịch hẹn
                 txtLinhVuc.Text = _lichHen.LinhVuc;
-                txtTenKhachHang.Text = _lichHen.Ten;
+                txtTenTho.Text = _lichHen.Ten;
                 txtSDT.Text = _lichHen.SDT;
                 txtLichThoDen.Text = _lichHen.LichHenDen.ToShortDateString();
                 txtGio.Text = _lichHen.Gio;

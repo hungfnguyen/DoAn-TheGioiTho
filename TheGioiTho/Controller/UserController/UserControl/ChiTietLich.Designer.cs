@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.txtLinhVuc = new System.Windows.Forms.TextBox();
-            this.txtTenKhachHang = new System.Windows.Forms.TextBox();
+            this.txtTenTho = new System.Windows.Forms.TextBox();
             this.txtSDT = new System.Windows.Forms.TextBox();
             this.txtLichThoDen = new System.Windows.Forms.TextBox();
             this.txtGio = new System.Windows.Forms.TextBox();
@@ -53,13 +53,13 @@
             this.txtLinhVuc.TabIndex = 0;
             this.txtLinhVuc.Text = "Điện lạnh";
             // 
-            // txtTenKhachHang
+            // txtTenTho
             // 
-            this.txtTenKhachHang.Location = new System.Drawing.Point(38, 58);
-            this.txtTenKhachHang.Name = "txtTenKhachHang";
-            this.txtTenKhachHang.Size = new System.Drawing.Size(147, 22);
-            this.txtTenKhachHang.TabIndex = 1;
-            this.txtTenKhachHang.Text = "Tên khách hàng";
+            this.txtTenTho.Location = new System.Drawing.Point(38, 58);
+            this.txtTenTho.Name = "txtTenTho";
+            this.txtTenTho.Size = new System.Drawing.Size(147, 22);
+            this.txtTenTho.TabIndex = 1;
+            this.txtTenTho.Text = "Tên thợ";
             // 
             // txtSDT
             // 
@@ -186,7 +186,7 @@
             this.Controls.Add(this.txtGio);
             this.Controls.Add(this.txtLichThoDen);
             this.Controls.Add(this.txtSDT);
-            this.Controls.Add(this.txtTenKhachHang);
+            this.Controls.Add(this.txtTenTho);
             this.Controls.Add(this.txtLinhVuc);
             this.Name = "ChiTietLich";
             this.Size = new System.Drawing.Size(1033, 149);
@@ -199,7 +199,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtLinhVuc;
-        private System.Windows.Forms.TextBox txtTenKhachHang;
+        private System.Windows.Forms.TextBox txtTenTho;
         private System.Windows.Forms.TextBox txtSDT;
         private System.Windows.Forms.TextBox txtLichThoDen;
         private System.Windows.Forms.TextBox txtGio;
